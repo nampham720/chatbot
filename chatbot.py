@@ -55,7 +55,7 @@ def confirm_answer(answer):
     '''
     
     logic = True
-    answer = answer.lower()
+    answer = answer.lower().strip()
     tracking = list()
     
     while logic:
@@ -63,7 +63,7 @@ def confirm_answer(answer):
         # user chooses yes ==> break the loop, return response = yes
         if answer in approval or sentiment_score(answer)>=0.05:
             logic = False
-            tracking.append(answer)
+            tracking.append('y')
             return tracking[-1]
     
         # users chooses no ==> make sure the answer is no
@@ -77,7 +77,7 @@ def confirm_answer(answer):
             # if new_answer = yes, current tracking = no ==> break the loop, final answer = no
             if answer in approval or sentiment_score(answer)>=0.05:
                 logic = False
-                return tracking[-1]
+                return 'n'
             
             # new_answer = no, ask for another answer
             if answer in denial or sentiment_score(answer)<=-0.05:
@@ -189,7 +189,7 @@ def name_extract(company):
                 name.append(token)
         
     # if input is a character, by accident
-    if len(sample) == 0:
+    if len(sample) == 0 or len(name) == 0:
         print("Unfortunately we haven't received your answer. Please re-enter your answer:")
         name.append(input())
     
