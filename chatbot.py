@@ -49,10 +49,10 @@ def sentiment_score(sentence):
 # In[4]:
 
 
-def confirm_answer(answer):
-    '''
-    Double check if the answer is per user's purpose
-    '''
+'''def confirm_answer(answer):
+
+    #Double check if the answer is per user's purpose
+
     
     logic = True
     answer = answer.lower().strip()
@@ -88,6 +88,27 @@ def confirm_answer(answer):
         if answer not in approval and answer not in denial:
             print("I don't get it. Please kindly re-enter your selection [y/n].")
             answer = input().lower()    
+            '''
+def confirm_answer(answer):
+    '''
+    Sipmle yes-no checker
+    '''
+    logic = True
+    answer = answer.lower().strip()
+    
+    while logic:
+        if answer in approval or sentiment_score(answer)>=0.05:
+            logic = False
+            return 'y'
+        
+        if answer in denial or sentimen_score(answer)<=-0.05:
+            logic = False
+            return 'n'
+        
+        if answer not in approval and answer not in denial:
+            print("I don't get it. Please kindly re-enter your selection [y/n].")
+            answer = input().lower()
+        
 
 
 # In[5]:
@@ -99,7 +120,8 @@ def opening():
     Ask for permission
     '''
     
-    print("May I ask for your company's name? [y/n]")
+    print("Welcome to Valuer.ai chatbot.")
+    print("It seems like you want to be working with us. If it's correct, please press 'y', 'n' otherwise [y/n]")
     answer = confirm_answer(input().lower())
     logic = True
     
@@ -167,7 +189,7 @@ def opening():
                 
 
 
-# In[6]:
+# In[17]:
 
 
 def name_extract(company):
@@ -193,8 +215,8 @@ def name_extract(company):
         print("Unfortunately we haven't received your answer. Please re-enter your answer:")
         name.append(input())
     
-    print('=> Name is: "{}"'.format(name[0]))
-    print("=> Is this correct? [y/n]")
+    #print('=> Name is: "{}"'.format(name[0]))
+    print('=> Is "{}" correct? [y/n]'.format(name[0]))
     answer = input()
     
     response = confirm_answer(answer)
@@ -309,7 +331,7 @@ def valid_email(mail):
             print("Your email is invalid. Please kindly re-enter your email address.")
             email, endings = email_symbol(input().strip().lower())
 
-        if domain != '' and others != '' and mail_name != '': 
+        if domain != '' and others != '' and mail_name != '' and ' ' not in mail_name: 
             print("Are your sure this is your email address? [y/n]")
             answer = input().lower()
             response = confirm_answer(answer)
@@ -333,6 +355,12 @@ def valid_email(mail):
 
 
 # In[9]:
+
+
+#valid_email('hello world@gmail.com')
+
+
+# In[10]:
 
 
 
@@ -390,7 +418,7 @@ def contact_info(founder, mail):
                     email = valid_email(input())
 
 
-# In[10]:
+# In[11]:
 
 
 def description(describe):
@@ -424,7 +452,7 @@ def description(describe):
     return describe
 
 
-# In[11]:
+# In[12]:
 
 
 def search_country(city):
@@ -466,7 +494,7 @@ def location_fb(city):
     country = search_country(city.lower())
     
     while country == None:
-        print("Ops! We can't locate where you are. Would you please tell us in which country it is?")
+        print("Ops! We can't locate where you are. Would you please tell us in which COUNTRY it is?")
         country = input()
         
     while len(country) == 0:
@@ -499,7 +527,7 @@ def location_fb(city):
                 return city, country
 
 
-# In[12]:
+# In[13]:
 
 
 def edit(answer):
@@ -556,7 +584,7 @@ def edit(answer):
         return answer, _
 
 
-# In[13]:
+# In[14]:
 
 
 # Create a dataframe to keep track with data and for fur furtherwork
@@ -591,13 +619,13 @@ def data_to_add(result):
     return df
 
 
-# In[14]:
+# In[15]:
 
 
 ########### MAIN ##########
 
 
-# In[15]:
+# In[18]:
 
 
 try:
@@ -717,13 +745,13 @@ if answer in approval:
         print("User did not finish the conversation.")
 
 
-# In[16]:
+# In[ ]:
 
 
 df
 
 
-# In[17]:
+# In[ ]:
 
 
 domains
